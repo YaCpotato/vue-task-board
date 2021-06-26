@@ -1,5 +1,6 @@
 <template>
   <p>{{ info }}</p>
+  <button @click="addTask">ADD TASK</button>
 </template>
 
 <script>
@@ -15,6 +16,18 @@ export default {
     axios
     .get('http://localhost:8000/api/tasks/')
     .then(response => (this.info = response))
+  },
+  methods: {
+    addTask() {
+      axios
+      .post('http://localhost:8000/api/tasks/',{
+        "title": "task front",
+        "discription": "this is task",
+        "status": "draft",
+        "author": 1
+      })
+      .then(response => (this.info = response))
+    }
   }
 }
 </script>

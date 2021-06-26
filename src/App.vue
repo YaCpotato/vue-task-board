@@ -11,10 +11,31 @@
   v-model="dialogVisible"
   width="30%">
   <span>This is a message</span>
+  <template #header>
+    <span class="dialog-header">
+      タスク追加フォーム
+    </span>
+  </template>
+  <el-form>
+    <el-form-item label="タスク名">
+      <el-input v-model="task.title" autocomplete="off"></el-input>
+      <el-select v-model="task.status">
+        <el-option v-for="status in taskStatusSelect" :key="status" :value="status" :label="status"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label="詳細">
+      <el-input type="textarea" v-model="task.discription" autocomplete="off"></el-input>
+    </el-form-item>
+    <el-form-item label="担当者">
+      <el-select v-model="task.author">
+        <el-option v-for="user in userInfo" :key="user.id" :value="user.id" :label="user.name"></el-option>
+      </el-select>
+    </el-form-item>
+  </el-form>
   <template #footer>
     <span class="dialog-footer">
       <el-button @click="dialogVisible = false">Cancel</el-button>
-      <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+      <el-button type="primary" @click="dialogVisible = false;addTask()">Confirm</el-button>
     </span>
   </template>
 </el-dialog>
@@ -29,24 +50,30 @@ export default {
     return {
       info:null,
       userInfo:[],
-      dialogVisible:false
+      dialogVisible:false,
+      task: {
+        "title": "",
+        "discription": "",
+        "status": "",
+        "author": null
+      },
+      taskStatusSelect:["draft", "wip", "done"]
     }
   },
   mounted() {
     axios
     .get('http://localhost:8000/api/tasks/')
     .then(response => (this.info = response))
+
+    this.getUsers()
   },
   methods: {
     addTask() {
       axios
-      .post('http://localhost:8000/api/tasks/',{
-        "title": "task front",
-        "discription": "this is task",
-        "status": "draft",
-        "author": 1
-      })
+      .post('http://localhost:8000/api/tasks/',this.task)
       .then(response => (this.info = response))
+
+      console.log()
     },
     getUsers() {
       axios
@@ -60,7 +87,7 @@ export default {
         }
       })
     }
-  }
+  },
 }
 </script>
 

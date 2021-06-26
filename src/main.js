@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import axios from 'axios'
+import ElementPlus from 'element-plus';
+import 'element-plus/lib/theme-chalk/index.css';
 
-createApp(App).mount('#app')
-
-axios.defaults.baseURL = process.env.VUE_APP_API_URL_BASE
+const app = createApp(App)
+app.use(ElementPlus)
+app.mount('#app')

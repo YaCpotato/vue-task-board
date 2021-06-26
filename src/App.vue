@@ -3,6 +3,22 @@
   <button @click="addTask">ADD TASK</button>
   <button @click="getUsers">GET USERS</button>
   <p v-for="user in userInfo" :key="user.id">{{ user.name }}</p>
+
+<el-button type="text" @click="dialogVisible = true">click to open the Dialog</el-button>
+
+<el-dialog
+  title="Tips"
+  v-model="dialogVisible"
+  width="30%">
+  <span>This is a message</span>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="dialogVisible = false">Cancel</el-button>
+      <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+    </span>
+  </template>
+</el-dialog>
+
 </template>
 
 <script>
@@ -12,7 +28,8 @@ export default {
   data () {
     return {
       info:null,
-      userInfo:[]
+      userInfo:[],
+      dialogVisible:false
     }
   },
   mounted() {

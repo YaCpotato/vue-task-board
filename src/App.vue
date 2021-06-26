@@ -2,7 +2,7 @@
   <p>{{ info }}</p>
   <button @click="addTask">ADD TASK</button>
   <button @click="getUsers">GET USERS</button>
-  <p>userInfo</p>
+  <p v-for="user in userInfo" :key="user.id">{{ user.name }}</p>
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       info:null,
-      userInfo:null
+      userInfo:[]
     }
   },
   mounted() {
@@ -34,7 +34,14 @@ export default {
     getUsers() {
       axios
       .get('http://localhost:8000/api/users/')
-      .then(response => (this.userInfo = response))
+      .then(response => {
+        for (var i = 0;i < response.data.length;i++) {
+          this.userInfo.push({
+            "id":response.data[i].id,
+            "name":response.data[i].username
+          })
+        }
+      })
     }
   }
 }

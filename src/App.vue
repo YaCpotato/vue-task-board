@@ -1,6 +1,8 @@
 <template>
   <p>{{ info }}</p>
   <button @click="addTask">ADD TASK</button>
+  <button @click="getUsers">GET USERS</button>
+  <p>userInfo</p>
 </template>
 
 <script>
@@ -9,7 +11,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      info:null
+      info:null,
+      userInfo:null
     }
   },
   mounted() {
@@ -27,6 +30,11 @@ export default {
         "author": 1
       })
       .then(response => (this.info = response))
+    },
+    getUsers() {
+      axios
+      .get('http://localhost:8000/api/users/')
+      .then(response => (this.userInfo = response))
     }
   }
 }

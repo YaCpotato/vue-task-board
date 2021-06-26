@@ -1,17 +1,19 @@
 <template>
-  <p>{{ data }}</p>
+  <p>{{ info }}</p>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
-      data:null
+      info:null
     }
   },
   mounted() {
     axios
-    .get('/tasks')
+    .get('http://localhost:8000/api/tasks/')
     .then(response => (this.info = response))
   }
 }

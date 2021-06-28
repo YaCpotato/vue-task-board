@@ -1,10 +1,46 @@
 <template>
-  <p>{{ info }}</p>
-  <button @click="addTask">ADD TASK</button>
-  <button @click="getUsers">GET USERS</button>
-  <p v-for="user in userInfo" :key="user.id">{{ user.name }}</p>
-
-<el-button type="text" @click="dialogVisible = true">click to open the Dialog</el-button>
+<el-row>
+  <el-col :span="8">
+    <el-card v-for="(draft,id) in draftList" :key="id" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span>{{ draft.title }}</span>
+        </div>
+      </template>
+      <template #body>
+        {{ draft.discription }}
+      </template>
+      {{ author(draft.author) }}
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card v-for="(wip,id) in wipList" :key="id" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span>{{ wip.title }}</span>
+        </div>
+      </template>
+      <template #body>
+        {{ wip.discription }}
+      </template>
+      {{ author(wip.author) }}
+    </el-card>
+  </el-col>
+  <el-col :span="8">
+    <el-card v-for="(done,id) in doneList" :key="id" shadow="hover">
+      <template #header>
+        <div class="card-header">
+          <span>{{ done.title }}</span>
+        </div>
+      </template>
+      <template #body>
+        {{ done.discription }}
+      </template>
+      {{ author(done.author) }}
+    </el-card>
+  </el-col>
+</el-row>
+<el-button type="primary" @click="dialogVisible = true">タスク追加</el-button>
 
 <el-dialog
   title="Tips"
@@ -49,6 +85,10 @@ export default {
   data () {
     return {
       info:null,
+      taskInfo:[],
+      draftList:[],
+      wipList:[],
+      doneList:[],
       userInfo:[],
       dialogVisible:false,
       task: {
@@ -61,13 +101,45 @@ export default {
     }
   },
   mounted() {
-    axios
-    .get('http://localhost:8000/api/tasks/')
-    .then(response => (this.info = response))
-
+    this.updateTaskInfo()
     this.getUsers()
   },
   methods: {
+    updateTaskInfo() {
+      axios
+      .get('http://localhost:8000/api/tasks/')
+      .then(response => {
+        console.log(response)
+        for (var i = 0;i < response.data.length;i++) {
+          switch(response.data[i].status) {
+            case 'draft':
+              this.draftList.push({
+                "id":response.data[i].id,
+                "title":response.data[i].title,
+                "discription":response.data[i].discription,
+                "author":response.data[i].author
+              })
+            break;
+            case 'wip':
+              this.wipList.push({
+                "id":response.data[i].id,
+                "title":response.data[i].title,
+                "discription":response.data[i].discription,
+                "author":response.data[i].author
+              })
+            break;
+            case 'done':
+              this.doneList.push({
+                "id":response.data[i].id,
+                "title":response.data[i].title,
+                "discription":response.data[i].discription,
+                "author":response.data[i].author
+              })
+            break;
+          }
+        }
+      })
+    },
     addTask() {
       axios
       .post('http://localhost:8000/api/tasks/',this.task)
@@ -86,8 +158,19 @@ export default {
           })
         }
       })
+    },
+    author(id) {
+      var result = ''
+      for (var i = 0;i < this.userInfo.length;i++) {
+        if(this.userInfo[i].id === id) {
+          result = this.userInfo[i].name
+        } else {
+          result = 'unknown'
+        }
+      }
+      return result
     }
-  },
+  }
 }
 </script>
 

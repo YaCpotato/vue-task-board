@@ -1,4 +1,14 @@
 <template>
+<div>
+<el-menu
+  class="header"
+  mode="horizontal"
+  background-color="#545c64"
+  active-text-color="#ffd04b">
+<div style="text-align:center;margin:0 auto;">
+  <span style="font-size:28px;font-weight:bold;color:white;">タスク管理ツール</span>
+</div>
+</el-menu>
 <el-row>
   <el-col :span="8">
     <el-card v-for="(draft,id) in draftList" :key="id" shadow="hover">
@@ -75,7 +85,7 @@
     </span>
   </template>
 </el-dialog>
-
+</div>
 </template>
 
 <script>
@@ -179,8 +189,10 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+.header {
+  width:100vw;
+  height:10vh;
+  background-color:black;
 }
 </style>

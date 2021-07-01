@@ -13,8 +13,8 @@
   <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">タスク追加</el-button>
 </div>
 <el-row>
-  <el-col :span="8">
-    <el-card v-for="(draft,id) in draftList" :key="id" shadow="hover">
+  <el-col :span="8" style="padding:1rem;">
+    <el-card v-for="(draft,id) in draftList" :key="id" shadow="hover" style="margin:0.5rem;">
       <template #header>
         <div class="card-header">
           <span>{{ draft.title }}</span>
@@ -26,8 +26,8 @@
       {{ author(draft.author) }}
     </el-card>
   </el-col>
-  <el-col :span="8">
-    <el-card v-for="(wip,id) in wipList" :key="id" shadow="hover">
+  <el-col :span="8" style="padding:1rem;">
+    <el-card v-for="(wip,id) in wipList" :key="id" shadow="hover" style="margin:0.5rem;">
       <template #header>
         <div class="card-header">
           <span>{{ wip.title }}</span>
@@ -39,8 +39,8 @@
       {{ author(wip.author) }}
     </el-card>
   </el-col>
-  <el-col :span="8">
-    <el-card v-for="(done,id) in doneList" :key="id" shadow="hover">
+  <el-col :span="8" style="padding:1rem;">
+    <el-card v-for="(done,id) in doneList" :key="id" shadow="hover" style="margin:0.5rem;">
       <template #header>
         <div class="card-header">
           <span>{{ done.title }}</span>

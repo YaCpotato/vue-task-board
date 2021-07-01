@@ -9,7 +9,7 @@
   <span style="font-size:28px;font-weight:bold;color:white;">タスク管理ツール</span>
 </div>
 </el-menu>
-<div>
+<div style="margin:2rem;">
   <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">タスク追加</el-button>
 </div>
 <el-row>

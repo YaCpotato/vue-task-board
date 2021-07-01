@@ -9,6 +9,9 @@
   <span style="font-size:28px;font-weight:bold;color:white;">タスク管理ツール</span>
 </div>
 </el-menu>
+<div>
+  <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">タスク追加</el-button>
+</div>
 <el-row>
   <el-col :span="8">
     <el-card v-for="(draft,id) in draftList" :key="id" shadow="hover">
@@ -50,8 +53,6 @@
     </el-card>
   </el-col>
 </el-row>
-<el-button type="primary" @click="dialogVisible = true">タスク追加</el-button>
-
 <el-dialog
   title="Tips"
   v-model="dialogVisible"
